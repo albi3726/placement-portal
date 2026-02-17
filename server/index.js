@@ -11,8 +11,10 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: "http://localhost:8080", // Your Vite frontend URL
-  credentials: true
+  origin: [
+    'http://localhost:8080',
+    'https://https://placement-portal-onrender.com'  // ← add after you get Vercel URL
+  ],
 }));
 app.use(express.json());
 
