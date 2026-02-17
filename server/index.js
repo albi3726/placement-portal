@@ -13,8 +13,11 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
   origin: [
     'http://localhost:8080',
-    'https://https://placement-portal-onrender.com'  // ← add after you get Vercel URL
+    'http://localhost:5173',
+    'https://placement-portal-ares.onrender.com',
+    'https://placement-portal-sand.vercel.app'
   ],
+  credentials: true
 }));
 app.use(express.json());
 
