@@ -1,4 +1,5 @@
-import { Briefcase, Bell, User, Menu, LogOut } from "lucide-react";
+import { Bell, User, Menu, LogOut } from "lucide-react";
+import logoImg from "@/assets/logo-preview.png";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,9 +22,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <NavLink to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <Briefcase className="w-5 h-5 text-primary-foreground" />
-            </div>
+             <img src={logoImg} alt="Placement Portal Logo" className="w-11 h-11 object-contain" />
             <span className="text-xl font-semibold text-foreground">Placement Portal</span>
           </NavLink>
 
