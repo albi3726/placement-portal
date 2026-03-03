@@ -1,7 +1,7 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { connectDB } from "../config/db.js";
+import { getStudentDB } from "../config/db.js";
 import { generateVerificationCode, sendVerificationEmail } from "../utils/email.js";
 
 const router = express.Router();
@@ -35,7 +35,7 @@ router.post("/signup", async (req, res) => {
       });
     }
 
-    const db = await connectDB();
+    const db = await getStudentDB();
     const usersCollection = db.collection("Placement student");
 
     // Check if user already exists
@@ -109,7 +109,7 @@ router.post("/verify-email", async (req, res) => {
       });
     }
 
-    const db = await connectDB();
+    const db = await getStudentDB();
     const usersCollection = db.collection("Placement student");
 
     // Find user
@@ -199,7 +199,7 @@ router.post("/resend-verification", async (req, res) => {
       });
     }
 
-    const db = await connectDB();
+    const db = await getStudentDB();
     const usersCollection = db.collection("Placement student");
 
     const user = await usersCollection.findOne({ email: email.toLowerCase() });
@@ -270,7 +270,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const db = await connectDB();
+    const db = await getStudentDB();
     const usersCollection = db.collection("Placement student");
 
     const user = await usersCollection.findOne({ email: email.toLowerCase() });
@@ -342,7 +342,7 @@ router.get("/verify", async (req, res) => {
       process.env.JWT_SECRET || "my-dog-is-cute"
     );
 
-    const db = await connectDB();
+    const db = await getStudentDB();
     const usersCollection = db.collection("Placement student");
     const user = await usersCollection.findOne(
       { email: decoded.email },
