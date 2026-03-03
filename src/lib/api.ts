@@ -1,14 +1,16 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/auth`  // ← adds /auth
+  : "http://localhost:5000/api/auth";
 
 export async function fetchJobs() {
-  const res = await fetch(`${API_BASE_URL}/api/jobs`);
+  const res = await fetch(`${API_URL}/api/jobs`);
   if (!res.ok) throw new Error("Failed to fetch jobs");
   const data = await res.json();
   return data.jobs;
 }
 
 export async function fetchCompanies() {
-  const res = await fetch(`${API_BASE_URL}/api/companies`);
+  const res = await fetch(`${API_URL}/api/companies`);
   if (!res.ok) throw new Error("Failed to fetch companies");
   const data = await res.json();
   return data.companies;
