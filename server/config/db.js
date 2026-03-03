@@ -22,18 +22,48 @@ const client = new MongoClient(uri, {
   },
 });
 
-let db;
+let studentDb;
+let jobsDb;
+let companiesDb;
 
 export async function connectDB() {
-  if (db) return db; // reuse existing connection
+  if (studentDb && jobsDb && companiesDb) {
+    return { studentDb, jobsDb, companiesDb };
+  }
 
   try {
     await client.connect();
-    db = client.db("Studentdb"); // uses DB name from URI
-    console.log("✅ MongoDB connected (from db.js)");
-    return db;
+    
+    studentDb = client.db("Studentdb");
+    jobsDb = client.db("JobApplication");
+    companiesDb = client.db("Companies");
+    
+    console.log("✅ MongoDB connected to all databases");
+    
+    return { studentDb, jobsDb, companiesDb };
   } catch (err) {
     console.error("❌ MongoDB connection failed:", err.message);
     process.exit(1);
   }
+}
+
+export async function getStudentDB() {
+  if (!studentDb) {
+    await connectDB();
+  }
+  return studentDb;
+}
+
+export async function getJobsDB() {
+  if (!jobsDb) {
+    await connectDB();
+  }
+  return jobsDb;
+}
+
+export async function getCompaniesDB() {
+  if (!companiesDb) {
+    await connectDB();
+  }
+  return companiesDb;
 }

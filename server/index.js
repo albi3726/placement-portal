@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/auth.js";
+import jobRoutes from "./routes/jobs.js";
+import companyRoutes from "./routes/companies.js";
 
 dotenv.config();
 
@@ -21,11 +23,13 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Connect to MongoDB
+// Connect to MongoDB (Studentdb for auth)
 connectDB();
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/jobs", jobRoutes);
+app.use("/api/companies", companyRoutes);
 
 // Health check route
 app.get("/api/health", (req, res) => {

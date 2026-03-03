@@ -1,50 +1,27 @@
-import { Briefcase, Users, Building2, TrendingUp } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Briefcase, Users, Building2, TrendingUp, Loader2 } from "lucide-react";
 import Header from "@/components/Header";
 import StatsCard from "@/components/StatsCard";
 import JobCard from "@/components/JobCard";
 import SearchBar from "@/components/SearchBar";
 import UpcomingEvents from "@/components/UpcomingEvents";
-
-const jobs = [
-  {
-    title: "Software Engineer",
-    company: "Google",
-    location: "Bangalore, India",
-    salary: "₹25-35 LPA",
-    type: "Full-time",
-    postedAt: "2 days ago",
-    tags: ["React", "Node.js", "Cloud"],
-  },
-  {
-    title: "Data Analyst",
-    company: "Microsoft",
-    location: "Hyderabad, India",
-    salary: "₹18-25 LPA",
-    type: "Full-time",
-    postedAt: "3 days ago",
-    tags: ["Python", "SQL", "Tableau"],
-  },
-  {
-    title: "Product Manager Intern",
-    company: "Amazon",
-    location: "Mumbai, India",
-    salary: "₹60K/month",
-    type: "Internship",
-    postedAt: "1 week ago",
-    tags: ["Product", "Agile", "Strategy"],
-  },
-  {
-    title: "UI/UX Designer",
-    company: "Flipkart",
-    location: "Bangalore, India",
-    salary: "₹15-22 LPA",
-    type: "Full-time",
-    postedAt: "5 days ago",
-    tags: ["Figma", "User Research", "Prototyping"],
-  },
-];
+import { fetchJobs } from "@/lib/api";
 
 const Index = () => {
+  const [jobs, setJobs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchJobs()
+      .then((data) => {
+        if (data && data.length > 0) setJobs(data.slice(0, 4));
+      })
+      .catch(() => {
+        console.log("Using fallback jobs data");
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -53,7 +30,7 @@ const Index = () => {
         {/* Welcome Section */}
         <section className="mb-8 animate-fade-in">
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-            Welcome to Placement Portal
+            Welcome back, Student! 👋
           </h1>
           <p className="text-muted-foreground text-lg">
             Find your dream placement opportunity today.
@@ -109,21 +86,33 @@ const Index = () => {
           <section className="lg:col-span-2">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-semibold text-foreground">Latest Opportunities</h2>
-              <a href="/jobs" className="text-primary font-medium hover:underline">
+              <a href="#" className="text-primary font-medium hover:underline">
                 View all →
               </a>
             </div>
-            <div className="grid gap-4">
-              {jobs.map((job, index) => (
-                <div
-                  key={index}
-                  className="animate-slide-up"
-                  style={{ animationDelay: `${0.4 + index * 0.1}s` }}
-                >
-                  <JobCard {...job} />
-                </div>
-              ))}
-            </div>
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-12">
+                <Loader2 className="w-8 h-8 text-primary animate-spin mb-4" />
+                <p className="text-muted-foreground">Loading opportunities...</p>
+              </div>
+            ) : jobs.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-12">
+                <Briefcase className="w-12 h-12 text-muted-foreground/50 mb-4" />
+                <p className="text-muted-foreground">No opportunities available right now.</p>
+              </div>
+            ) : (
+              <div className="grid gap-4">
+                {jobs.map((job, index) => (
+                  <div
+                    key={index}
+                    className="animate-slide-up"
+                    style={{ animationDelay: `${0.4 + index * 0.1}s` }}
+                  >
+                    <JobCard {...job} />
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
 
           {/* Sidebar */}
