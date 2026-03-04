@@ -118,7 +118,7 @@ const ApplyJob = () => {
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="fullName"
-                      placeholder="John Doe"
+                      placeholder=""
                       value={formData.fullName}
                       onChange={(e) => handleChange("fullName", e.target.value)}
                       className="pl-10"
@@ -133,7 +133,7 @@ const ApplyJob = () => {
                     <Input
                       id="email"
                       type="email"
-                      placeholder="you@university.edu"
+                      placeholder=""
                       value={formData.email}
                       onChange={(e) => handleChange("email", e.target.value)}
                       className="pl-10"
@@ -148,7 +148,7 @@ const ApplyJob = () => {
                     <Input
                       id="phone"
                       type="tel"
-                      placeholder="+91 9876543210"
+                      placeholder=""
                       value={formData.phone}
                       onChange={(e) => handleChange("phone", e.target.value)}
                       className="pl-10"
@@ -171,7 +171,7 @@ const ApplyJob = () => {
                     <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="college"
-                      placeholder="IIT Bombay"
+                      placeholder=""
                       value={formData.college}
                       onChange={(e) => handleChange("college", e.target.value)}
                       className="pl-10"
@@ -183,7 +183,7 @@ const ApplyJob = () => {
                   <Label htmlFor="degree">Degree</Label>
                   <Select onValueChange={(val) => handleChange("degree", val)} required>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select degree" />
+                      <SelectValue placeholder="" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="btech">B.Tech</SelectItem>
@@ -201,7 +201,7 @@ const ApplyJob = () => {
                   <Label htmlFor="graduationYear">Graduation Year</Label>
                   <Select onValueChange={(val) => handleChange("graduationYear", val)} required>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select year" />
+                      <SelectValue placeholder="" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="2024">2024</SelectItem>
@@ -219,7 +219,7 @@ const ApplyJob = () => {
                     step="0.01"
                     min="0"
                     max="10"
-                    placeholder="8.5"
+                    placeholder=""
                     value={formData.cgpa}
                     onChange={(e) => handleChange("cgpa", e.target.value)}
                     required
@@ -238,7 +238,7 @@ const ApplyJob = () => {
                   <Label htmlFor="skills">Key Skills</Label>
                   <Input
                     id="skills"
-                    placeholder="React, Python, SQL, Machine Learning..."
+                    placeholder=""
                     value={formData.skills}
                     onChange={(e) => handleChange("skills", e.target.value)}
                     required
@@ -248,7 +248,7 @@ const ApplyJob = () => {
                   <Label htmlFor="experience">Relevant Experience</Label>
                   <Textarea
                     id="experience"
-                    placeholder="Describe any internships, projects, or relevant work experience..."
+                    placeholder=""
                     value={formData.experience}
                     onChange={(e) => handleChange("experience", e.target.value)}
                     rows={3}
