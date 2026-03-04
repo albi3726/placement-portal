@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const jobsDb = await getJobsDB();
-    const jobsCollection = jobsDb.collection("jobs");
+    const jobsCollection = jobsDb.collection("JobCenter");
     const jobs = await jobsCollection.find({}).toArray();
 
     res.json({

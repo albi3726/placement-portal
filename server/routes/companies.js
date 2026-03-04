@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const companiesDb = await getCompaniesDB();
-    const companiesCollection = companiesDb.collection("companies");
+    const companiesCollection = companiesDb.collection("CompanyName");
     const companies = await companiesCollection.find({}).toArray();
 
     res.json({
