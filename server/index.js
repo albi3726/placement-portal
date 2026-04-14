@@ -1,10 +1,13 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { connectDB } from "./config/db.js";
+import { connectDB, getJobsDB, getCompaniesDB } from "./config/db.js";
 import authRoutes from "./routes/auth.js";
 import jobRoutes from "./routes/jobs.js";
 import companyRoutes from "./routes/companies.js";
+import adminRoutes from "./routes/adminRoutes.js";
+import { startAutoSync } from "./services/jobAggregator.js";
+import { startCompanyAutoSync } from "./services/companyAggregator.js";  // ← NEW
 
 dotenv.config();
 
@@ -23,13 +26,14 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Connect to MongoDB (Studentdb for auth)
+// Connect to MongoDB
 connectDB();
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/companies", companyRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Health check route
 app.get("/api/health", (req, res) => {
@@ -45,6 +49,25 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
+  
+  // Start automatic job sync
+  try {
+    const jobsDb = await getJobsDB();
+    startAutoSync(jobsDb);
+    console.log("✅ Job aggregator initialized");
+  } catch (error) {
+    console.error("❌ Failed to start job aggregator:", error.message);
+  }
+
+  // Start automatic company sync (NEW!)
+  try {
+    const jobsDb = await getJobsDB();
+    const companiesDb = await getCompaniesDB();
+    startCompanyAutoSync(jobsDb, companiesDb);
+    console.log("✅ Company aggregator initialized");
+  } catch (error) {
+    console.error("❌ Failed to start company aggregator:", error.message);
+  }
 });

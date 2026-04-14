@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const companiesDb = await getCompaniesDB();
-    const companiesCollection = companiesDb.collection("companies");
+    const companiesCollection = companiesDb.collection("CompanyName");
     const { ObjectId } = await import("mongodb");
 
     const company = await companiesCollection.findOne({ _id: new ObjectId(req.params.id) });

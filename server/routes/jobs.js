@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const jobsDb = await getJobsDB();
-    const jobsCollection = jobsDb.collection("jobs");
+    const jobsCollection = jobsDb.collection("JobCenter");
     const { ObjectId } = await import("mongodb");
 
     const job = await jobsCollection.findOne({ _id: new ObjectId(req.params.id) });
